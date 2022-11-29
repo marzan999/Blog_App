@@ -18,106 +18,117 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: _detailsStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something error');
-          }
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text(
+            'Details',
+            style: TextStyle(color: Colors.black, fontSize: 25),
+          ),
+          centerTitle: true,
+        ),
+        body: StreamBuilder<QuerySnapshot>(
+          stream: _detailsStream,
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something error');
+            }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-          return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 350,
-                  child: Card(
-                    elevation: 7,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: Container(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(15),
-                                    bottomLeft: Radius.circular(15)),
-                                child: Image.network(
-                                  data["img"],
-                                  height: MediaQuery.of(context).size.height,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 10),
-                                  child: Text(
-                                    data["title"],
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold),
+            return ListView(
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 350,
+                    child: Card(
+                      elevation: 7,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: Container(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      bottomLeft: Radius.circular(15)),
+                                  child: Image.network(
+                                    data["img"],
+                                    height: MediaQuery.of(context).size.height,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10, left: 20, right: 10),
-                                  child: Text(
-                                    data["des"],
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Center(
-                                  child: MaterialButton(
-                                    color: Color.fromARGB(255, 124, 161, 125),
-                                    height: 45,
-                                    minWidth: 100,
-                                    onPressed: () {
-                                      customDialog(data['img'], data['title'],
-                                          data['des']);
-                                    },
+                              )),
+                          Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        top: 10, left: 20, right: 10),
                                     child: Text(
-                                      "Veiw Details",
+                                      data["title"],
                                       style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                )
-                              ],
-                            ))
-                      ],
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        top: 10, left: 20, right: 10),
+                                    child: Text(
+                                      data["des"],
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Center(
+                                    child: MaterialButton(
+                                      color: Color.fromARGB(255, 124, 161, 125),
+                                      height: 45,
+                                      minWidth: 100,
+                                      onPressed: () {
+                                        customDialog(data['img'], data['title'],
+                                            data['des']);
+                                      },
+                                      child: Text(
+                                        "Veiw Details",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ))
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
-          );
-        },
+                );
+              }).toList(),
+            );
+          },
+        ),
       ),
     );
   }

@@ -26,10 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 130, 165, 131),
+        backgroundColor: Colors.white,
         body: Center(
           child: CircularProgressIndicator(
-            color: Colors.white,
+            color: Colors.orange,
           ),
         ),
       ),
