@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:blog_app/screens/blog/details.dart';
+import 'package:blog_app/screens/homepage.dart';
 import 'package:blog_app/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -98,7 +100,7 @@ class _SignInState extends State<SignIn> {
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => SignUp()));
+                                builder: (context) => HomePage()));
                           },
                           child: Container(
                             height: 50,
